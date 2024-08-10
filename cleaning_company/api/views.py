@@ -26,3 +26,20 @@ def getRoutes(request):
         '/api/vers/',
     ]
     return Response(routes)
+
+class EmployeeView(APIView):
+    def get(self, request):
+        query = request.GET.get('q')
+        if query:
+            Employee = Employees.objects.filter(name__icontains=query)
+        else:
+            Employee = Employees.objects.all()
+        serializer = EmployeesListeSerializer(Employee, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = EmployeeSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -43,3 +43,22 @@ class EmployeeView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteEmployeeView(APIView):
+    def delete(self, request, pk):
+        try:
+            Employees.objects.get(id=pk).delete()
+        except Employees.DoesNotExist:
+            pass
+        Response(status=status.HTTP_201_CREATED)
+
+class HourJobView(APIView):
+    def post(self, request):
+            # ids = request.data.get('ids')
+            ids = ['1','2','3','4']
+            for ide in ids:
+                # employee= Employees.objects.get(id=int(ide))
+                # employee.hour += 1
+                # employee.save()
+                id = int(ide)+1
+                print(id)

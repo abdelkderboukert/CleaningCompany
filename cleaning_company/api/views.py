@@ -10,6 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
+from django.db.models import F
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -54,11 +55,45 @@ class DeleteEmployeeView(APIView):
 
 class HourJobView(APIView):
     def post(self, request):
-            # ids = request.data.get('ids')
-            ids = ['1','2','3','4']
-            for ide in ids:
-                # employee= Employees.objects.get(id=int(ide))
-                # employee.hour += 1
-                # employee.save()
-                id = int(ide)+1
-                print(id)
+        data = request.data.get('data', [])  # retrieve data from request body
+        # data = [
+        #     {'id': '1', 'hour': 2},
+        #     {'id': '2', 'hour': 3},
+        #     {'id': '3', 'hour': 1},
+        #     {'id': '4', 'hour': 4}
+        # ]  # hardcoded data for testing purposes
+
+        # Validate the incoming data
+        if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
+            return Response({'error': 'Invalid data format'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Update the hour for each employee
+        for item in data:
+            try:
+                employee = Employees.objects.get(id=int(item['id']))
+                employee.hour = employee.hour + int(item['hour'])
+                employee.save()
+            except Employees.DoesNotExist:
+                return Response({'error': f"Employee with id {item['id']} does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_202_ACCEPTED)
+    
+    def get(self, request):
+        query = request.GET.get('q')
+        if query:
+            employee = Employees.objects.filter(name__icontains=query)
+            for e in employee:
+                h = e.salary_per_hour * e.hour
+                e.hourjob = h
+                e.save()
+            serializer = EmployeeSerializer(employee, many=True)
+        else:
+            employee = Employees.objects.all()
+            for e in employee:
+                h = e.salary_per_hour * e.hour
+                e.hourjob = h
+                e.save()
+        serializer = EmployeesListeSerializer(employee, many=True)
+        return Response(serializer.data)
+        
+        

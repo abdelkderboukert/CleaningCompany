@@ -22,4 +22,4 @@ class EmployeesListeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employees
-        fields = ['id', 'name', 'prename', 'card', 'phone' , 'salary', 'hour']
+        fields = ['id', 'name', 'prename', 'card', 'phone' , 'salary', 'hour', 'hourjob']

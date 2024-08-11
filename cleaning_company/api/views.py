@@ -53,47 +53,47 @@ class DeleteEmployeeView(APIView):
             pass
         Response(status=status.HTTP_201_CREATED)
 
+from django.db.models import F
+
 class HourJobView(APIView):
     def post(self, request):
-        data = request.data.get('data', [])  # retrieve data from request body
-        # data = [
-        #     {'id': '1', 'hour': 2},
-        #     {'id': '2', 'hour': 3},
-        #     {'id': '3', 'hour': 1},
-        #     {'id': '4', 'hour': 4}
-        # ]  # hardcoded data for testing purposes
+        data = request.data
+        # .get('data', [])
+        print(data)
 
         # Validate the incoming data
         if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
             return Response({'error': 'Invalid data format'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Update the hour for each employee
+        errors = []
         for item in data:
+            if 'id' not in item or 'hour' not in item:
+                errors.append({'error': 'Missing required keys', 'data': item})
+                continue
+
             try:
                 employee = Employees.objects.get(id=int(item['id']))
-                employee.hour = employee.hour + int(item['hour'])
+                employee.hour = F('hour') + int(item['hour'])
                 employee.save()
             except Employees.DoesNotExist:
-                return Response({'error': f"Employee with id {item['id']} does not exist"}, status=status.HTTP_404_NOT_FOUND)
+                errors.append({'error': f"Employee with id {item['id']} does not exist", 'data': item})
+
+        if errors:
+            return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_202_ACCEPTED)
-    
+
     def get(self, request):
         query = request.GET.get('q')
         if query:
-            employee = Employees.objects.filter(name__icontains=query)
-            for e in employee:
-                h = e.salary_per_hour * e.hour
-                e.hourjob = h
-                e.save()
-            serializer = EmployeeSerializer(employee, many=True)
+            employees = Employees.objects.filter(name__icontains=query)
         else:
-            employee = Employees.objects.all()
-            for e in employee:
-                h = e.salary_per_hour * e.hour
-                e.hourjob = h
-                e.save()
-        serializer = EmployeesListeSerializer(employee, many=True)
+            employees = Employees.objects.all()
+
+        # Update hourjob attribute in a single query
+        employees.update(hourjob=F('salary_per_hour') * F('hour'))
+
+        serializer = EmployeesListeSerializer(employees, many=True)
         return Response(serializer.data)
         
         

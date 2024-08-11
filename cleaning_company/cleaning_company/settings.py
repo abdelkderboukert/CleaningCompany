@@ -152,22 +152,22 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-from celery.schedules import crontab
+# from celery.schedules import crontab
 
-CELERY_BEAT_SCHEDULE = {
-    'check-time-every-minute': {
-        'task': 'api.tasks.reset_hours',
-        'schedule': 60.0,  # every 60 seconds
-    },
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'check-time-every-minute': {
+#         'task': 'api.tasks.reset_hours',
+#         'schedule': 60.0,  # every 60 seconds
+#     },
+# }
 
-COMMANDS = [
-    'run_celery',
-]
+# COMMANDS = [
+#     'run_celery',
+# ]
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'UTC'

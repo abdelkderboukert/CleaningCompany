@@ -16,16 +16,8 @@ from datetime import date
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
-        '/api/token/',
-        '/api/register/',
-        '/api/token/refresh/',
-        '/api/userList/',
-        '/api/camanies/',
-        '/api/clients/',
-        '/api/buyings/',
-        '/api/balites/',
-        '/api/dattes/',
-        '/api/vers/',
+        '/api/hourjob/',
+        '/api/Employee/',
     ]
     return Response(routes)
 

@@ -60,7 +60,6 @@ class HourJobView(APIView):
     def post(self, request):
         data = request.data
         # .get('data', [])
-        print(data)
 
         # Validate the incoming data
         if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):

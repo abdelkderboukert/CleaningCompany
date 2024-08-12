@@ -20,6 +20,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
 ######################################################################################################
 # #!/usr/bin/env python
 # """Django's command-line utility for administrative tasks."""
@@ -42,8 +43,7 @@ if __name__ == '__main__':
 #     if sys.argv[1] == 'runserver' and not os.path.exists('.celery_started'):
 #         with open('.celery_started', 'w') as f:
 #             f.write('True')
-#         os.system("start cmd /k celery -A cleaning_company worker --loglevel=info")
-#         os.system("start cmd /k celery -A cleaning_company beat --loglevel=info")
+#             os.system("start cmd /k \"code . & cd frontend & npm run dev\"")
 #     elif os.path.exists('.celery_started'):
 #         os.remove('.celery_started')
 

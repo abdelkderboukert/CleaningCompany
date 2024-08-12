@@ -151,3 +151,15 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+APSCHEDULER_CONFIG = {
+    'apscheduler.jobstores.default': {
+        'type': 'memory',
+    },
+    'apscheduler.executors.default': {
+        'type': 'threadpool',
+        'max_workers': 1,
+    },
+    'apscheduler.job_defaults.coalesce': False,
+    'apscheduler.job_defaults.max_instances': 1,
+}

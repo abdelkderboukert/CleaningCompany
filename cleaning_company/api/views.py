@@ -21,6 +21,14 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+class CreateEmployeeView(APIView):
+    def post(self, request):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
 class EmployeeView(APIView):
     def get(self, request):
         query = request.GET.get('q')
@@ -52,7 +60,6 @@ class HourJobView(APIView):
     def post(self, request):
         data = request.data
         # .get('data', [])
-
         # Validate the incoming data
         if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
             return Response({'error': 'Invalid data format'}, status=status.HTTP_400_BAD_REQUEST)
@@ -65,7 +72,7 @@ class HourJobView(APIView):
 
             try:
                 employee = Employees.objects.get(id=int(item['id']))
-                employee.hour = F('hour') + int(item['hour'])
+                employee.hourjob = F('hourjob') + int(item['hour'])
                 employee.save()
             except Employees.DoesNotExist:
                 errors.append({'error': f"Employee with id {item['id']} does not exist", 'data': item})
@@ -83,7 +90,7 @@ class HourJobView(APIView):
             employees = Employees.objects.all()
 
         # Update hourjob attribute in a single query
-        employees.update(hourjob=F('salary_per_hour') * F('hour'))
+        employees.update(salarypay=F('salary_per_hour') * F('hourjob'))
 
         serializer = EmployeesListeSerializer(employees, many=True)
         return Response(serializer.data)

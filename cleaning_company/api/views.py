@@ -95,4 +95,46 @@ class HourJobView(APIView):
         serializer = EmployeesListeSerializer(employees, many=True)
         return Response(serializer.data)
         
-        
+import os
+from django.http import HttpResponse
+from openpyxl import Workbook
+from datetime import datetime
+from .models import Employees  # Import your Employees model
+
+def export_to_excel_view(request):
+    # Get the current date and time
+    now = datetime.now()
+    print("is ok")
+    # Create a new Excel workbook
+    wb = Workbook()
+
+    # Get the active worksheet
+    ws = wb.active
+
+    # Set the header row
+    ws['A1'] = 'Employee ID'
+    ws['B1'] = 'Name'
+    ws['C1'] = 'Salary'
+    ws['D1'] = 'Hour'
+    ws['E1'] = 'Hour Job'
+
+    # Get the data from the database
+    employees = Employees.objects.all()
+
+    # Iterate over the data and write it to the worksheet
+    for i, employee in enumerate(employees, start=2):
+        ws[f'A{i}'] = employee.id
+        ws[f'B{i}'] = employee.name
+        ws[f'C{i}'] = employee.salary
+        ws[f'D{i}'] = employee.hour
+        ws[f'E{i}'] = employee.hourjob
+
+    # Create a file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="employees_{now.strftime("%Y-%m")}.xlsx"'
+
+    # Save the workbook to the response
+    wb.save(response)
+
+    # Return the response
+    return response      

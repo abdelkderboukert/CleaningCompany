@@ -34,6 +34,12 @@ def export_to_excel():
     cell.alignment = openpyxl.styles.Alignment(horizontal='center', vertical='center')
     cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
     cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+    
+    for col in range(1, 8):
+        cell = ws.cell(row=2, column=col)
+        cell.fill = PatternFill(start_color='FFFF00', fill_type='solid')
+        cell.font = Font(bold=True, color='FFFFFF', size=14)
+
     ws['A2'] = 'Employee ID'
     ws['B2'] = 'Name'
     ws['C2'] = 'Prename'

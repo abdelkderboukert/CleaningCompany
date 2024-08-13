@@ -9,4 +9,4 @@ class ApiConfig(AppConfig):
     def ready(self):
         from .task import my_task, export_to_excel
         my_task()
-        # export_to_excel()
+        export_to_excel()

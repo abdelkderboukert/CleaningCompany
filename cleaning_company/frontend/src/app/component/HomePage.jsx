@@ -1,5 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import home from "../home/page";
+import test from "./test";
 
 export default function HomePage() {
   const [error, setError] = useState(null);
@@ -29,14 +33,39 @@ export default function HomePage() {
     fetchData();
   }, [data]);
   return (
-    <>
-      <div className="text-red-700 bg-black h-full w-screen">HomePage</div>
-      <details
-        className=" border-2 border-black bg-black text-white rounded-xl h-48 w-60"
-        open
-      >
-        <summary>about1</summary>i want to help u
-      </details>
-    </>
+    <div className="h-dvh w-dvw p-5">
+      <div className=" relative flex h-full w-full bg-white rounded-3xl">
+        <motion.div
+          className="mx-auto h-14 w-1/2 bg-black rounded-b-3xl"
+          initial={{ width: 0 }}
+          animate={{ width: "50%" }}
+          transition={{ duration: 1 }}
+        ></motion.div>
+        <motion.div
+          className=" absolute h-5 w-5 bg-transparent rounded-tr-3xl"
+          style={{
+            marginLeft: "calc( 25% - 20px )",
+            boxShadow: "5.5px -5.5px black",
+          }}
+          initial={{ marginLeft: "calc( 50% - 20px )" }}
+          animate={{ marginLeft: "calc( 25% - 20px )" }}
+          transition={{ duration: 1 }}
+        />
+        <motion.div
+          className=" absolute h-5 w-5 bg-transparent rounded-tl-3xl"
+          style={{
+            marginLeft: "75%",
+            boxShadow: "-6px -6px black",
+          }}
+          initial={{ marginLeft: "calc( 50% - 20px )" }}
+          animate={{ marginLeft: "calc( 75% )" }}
+          transition={{ duration: 1 }}
+        />
+        
+        {/* <div className="text-red-700 bg-black">HomePage</div>
+        <h1>Home Page</h1>
+        <Link href="/home">Go to Home</Link> */}
+      </div>
+    </div>
   );
 }

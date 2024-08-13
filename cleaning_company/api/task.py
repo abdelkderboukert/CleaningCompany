@@ -38,7 +38,7 @@ def export_to_excel():
         ws[f'E{i}'] = employee.hourjob
 
     # Specify the path where you want to save the file
-    folder_path = 'C:\Users\HP\rebo\CleaningCompany\cleaning_company\ExcelFile'
+    folder_path = r'C:\Users\HP\rebo\CleaningCompany\cleaning_company\ExcelFile'
     filename = f'{folder_path}/employees_{now.strftime("%Y-%m")}.xlsx'
 
     # Save the workbook to a file
@@ -52,5 +52,5 @@ scheduler.add_job(my_task, 'cron', day='1', hour='0', minute='0')
 scheduler.add_job(export_to_excel, 'cron', day='1', hour='0', minute='0')
 scheduler.start()
 
-while True:
-    time.sleep(1)
+# while True:
+#     time.sleep(1)

@@ -117,9 +117,13 @@ def export_to_excel_view(request):
     ws['C1'] = 'Salary'
     ws['D1'] = 'Hour'
     ws['E1'] = 'Hour Job'
+    ws['F1'] = 'Salary to pay'
 
     # Get the data from the database
     employees = Employees.objects.all()
+
+    # Initialize total salary to pay
+    total_salary_to_pay = 0
 
     # Iterate over the data and write it to the worksheet
     for i, employee in enumerate(employees, start=2):
@@ -128,6 +132,13 @@ def export_to_excel_view(request):
         ws[f'C{i}'] = employee.salary
         ws[f'D{i}'] = employee.hour
         ws[f'E{i}'] = employee.hourjob
+        ws[f'F{i}'] = employee.salarypay
+        total_salary_to_pay += employee.salarypay
+
+    # Add a row for the total salary to pay
+    total_row = len(employees) + 2
+    ws[f'F{total_row}'] = f'Total Salary to Pay'
+    ws[f'G{total_row}'] = total_salary_to_pay
 
     # Create a file response
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -137,4 +148,4 @@ def export_to_excel_view(request):
     wb.save(response)
 
     # Return the response
-    return response      
+    return response

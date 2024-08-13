@@ -16,7 +16,7 @@ import os
 from django.http import HttpResponse
 from openpyxl import Workbook
 from openpyxl.utils.cell import get_column_letter
-from openpyxl.styles import Font, PatternFill, Alignment 
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 import openpyxl
 from datetime import datetime
 from .models import Employees  # Import your Employees model
@@ -121,11 +121,19 @@ def export_to_excel_view(request):
     cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
     cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
 
+    # Add borders to the header row
+    border = Border(left=Side(style='thin'),
+                    right=Side(style='thin'),
+                    top=Side(style='thin'),
+                    bottom=Side(style='thin'))
+    cell.border = border
+
     for col in range(1, 8):
         cell = ws.cell(row=2, column=col)
         cell.fill = PatternFill(start_color='FFFF00', fill_type='solid')
         cell.font = Font(bold=True, color='FFFFFF', size=14)
-        
+        cell.border = border  # Add border to each cell in the header row
+
     ws['A2'] = 'Employee ID'
     ws['B2'] = 'Name'
     ws['C2'] = 'Prename'
@@ -151,6 +159,11 @@ def export_to_excel_view(request):
         ws[f'G{i+1}'] = employee.salarypay
         total_salary_to_pay += employee.salarypay
 
+        # Add borders to each cell in the data rows
+        for col in range(1, 8):
+            cell = ws.cell(row=i+1, column=col)
+            cell.border = border
+
     total_row = len(employees) + 3    
     # Set the width of columns B to F to 90px
     for col in range(1, 8):  # Columns A to G
@@ -159,7 +172,8 @@ def export_to_excel_view(request):
         cell = ws.cell(row=total_row, column=col)
         cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
         cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
-    
+        cell.border = border  # Add border to each cell in the total row
+
     for i in range(1, ws.max_row + 1):
         ws.row_dimensions[i].height = 20
 

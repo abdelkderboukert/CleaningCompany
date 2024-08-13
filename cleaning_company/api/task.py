@@ -107,9 +107,13 @@ def export_to_excel():
     # Return the filename
     return filename
 
+def test():
+    print("is runing")
+
 scheduler = BackgroundScheduler()
-scheduler.add_job(my_task, 'cron', day='1', hour='0', minute='0')
-scheduler.add_job(export_to_excel, 'cron', day='1', hour='0', minute='0')
+scheduler.add_job(my_task, 'cron', month='*', day='1', hour='0', minute='10')
+scheduler.add_job(export_to_excel, 'cron', month='*', day='1', hour='0', minute='0')
+# scheduler.add_job(test, 'interval', seconds=30)
 scheduler.start()
 
 # while True:

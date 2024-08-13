@@ -19,6 +19,7 @@ from openpyxl.utils.cell import get_column_letter
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 import openpyxl
 from datetime import datetime
+from django.db.models import F
 from .models import Employees  # Import your Employees model
 
 @api_view(['GET'])
@@ -61,8 +62,6 @@ class DeleteEmployeeView(APIView):
         except Employees.DoesNotExist:
             pass
         Response(status=status.HTTP_201_CREATED)
-
-from django.db.models import F
 
 class HourJobView(APIView):
     def post(self, request):

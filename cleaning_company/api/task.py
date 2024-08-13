@@ -4,6 +4,14 @@ import datetime
 import time
 from openpyxl import Workbook
 from django.db.models import Q
+import os
+from django.http import HttpResponse
+from openpyxl import Workbook
+from openpyxl.utils.cell import get_column_letter
+from openpyxl.styles import Font, PatternFill, Alignment 
+import openpyxl
+from datetime import datetime
+from datetime import date
 
 def my_task():
     print("Running my task!")
@@ -11,7 +19,7 @@ def my_task():
 
 def export_to_excel():
     # Get the current date and time
-    now = datetime.datetime.now()
+    now = datetime.now()
 
     # Create a new Excel workbook
     wb = Workbook()
@@ -20,22 +28,54 @@ def export_to_excel():
     ws = wb.active
 
     # Set the header row
-    ws['A1'] = 'Employee ID'
-    ws['B1'] = 'Name'
-    ws['C1'] = 'Salary'
-    ws['D1'] = 'Hour'
-    ws['E1'] = 'Hour Job'
+    ws.merge_cells('A1:G1')
+    cell = ws['A1']
+    cell.value = 'tablo'
+    cell.alignment = openpyxl.styles.Alignment(horizontal='center', vertical='center')
+    cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+    cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+    ws['A2'] = 'Employee ID'
+    ws['B2'] = 'Name'
+    ws['C2'] = 'Prename'
+    ws['D2'] = 'Salary'
+    ws['E2'] = 'Hour'
+    ws['F2'] = 'Hour Job'
+    ws['G2'] = 'Salary to pay'
 
     # Get the data from the database
     employees = Employees.objects.all()
 
+    # Initialize total salary to pay
+    total_salary_to_pay = 0
+
     # Iterate over the data and write it to the worksheet
     for i, employee in enumerate(employees, start=2):
-        ws[f'A{i}'] = employee.id
-        ws[f'B{i}'] = employee.name
-        ws[f'C{i}'] = employee.salary
-        ws[f'D{i}'] = employee.hour
-        ws[f'E{i}'] = employee.hourjob
+        ws[f'A{i+1}'] = employee.id
+        ws[f'B{i+1}'] = employee.name
+        ws[f'C{i+1}'] = employee.prename
+        ws[f'D{i+1}'] = employee.salary
+        ws[f'E{i+1}'] = employee.hour
+        ws[f'F{i+1}'] = employee.hourjob
+        ws[f'G{i+1}'] = employee.salarypay
+        total_salary_to_pay += employee.salarypay
+
+    total_row = len(employees) + 3    
+    # Set the width of columns B to F to 90px
+    for col in range(1, 8):  # Columns A to G
+        column_letter = get_column_letter(col)
+        ws.column_dimensions[column_letter].width = 20
+        cell = ws.cell(row=total_row, column=col)
+        cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+        cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+    
+    for i in range(1, ws.max_row + 1):
+        ws.row_dimensions[i].height = 20
+
+    # Add a row for the total salary to pay
+    
+    ws[f'A{total_row}'] = 'Total'
+    ws.merge_cells(f'B{total_row}:G{total_row}')
+    ws[f'B{total_row}'] = total_salary_to_pay
 
     # Specify the path where you want to save the file
     folder_path = r'C:\Users\HP\rebo\CleaningCompany\cleaning_company\ExcelFile'

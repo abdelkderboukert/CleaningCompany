@@ -12,6 +12,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
 from django.db.models import F
 from datetime import date
+import os
+from django.http import HttpResponse
+from openpyxl import Workbook
+from openpyxl.utils.cell import get_column_letter
+from openpyxl.styles import Font, PatternFill, Alignment 
+import openpyxl
+from datetime import datetime
+from .models import Employees  # Import your Employees model
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -94,15 +102,6 @@ class HourJobView(APIView):
 
         serializer = EmployeesListeSerializer(employees, many=True)
         return Response(serializer.data)
-        
-import os
-from django.http import HttpResponse
-from openpyxl import Workbook
-from openpyxl.utils.cell import get_column_letter
-from openpyxl.styles import Font, PatternFill
-
-from datetime import datetime
-from .models import Employees  # Import your Employees model
 
 def export_to_excel_view(request):
     # Get the current date and time
@@ -115,7 +114,12 @@ def export_to_excel_view(request):
     ws = wb.active
 
     # Set the header row
-    ws.merge_cells['A1:G1'] = 'tablo'
+    ws.merge_cells('A1:G1')
+    cell = ws['A1']
+    cell.value = 'tablo'
+    cell.alignment = openpyxl.styles.Alignment(horizontal='center', vertical='center')
+    cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+    cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
     ws['A2'] = 'Employee ID'
     ws['B2'] = 'Name'
     ws['C2'] = 'Prename'
@@ -131,17 +135,17 @@ def export_to_excel_view(request):
     total_salary_to_pay = 0
 
     # Iterate over the data and write it to the worksheet
-    for i, employee in enumerate(employees, start=3):
-        ws[f'A{i}'] = employee.id
-        ws[f'B{i}'] = employee.name
-        ws[f'C{i}'] = employee.prename
-        ws[f'D{i}'] = employee.salary
-        ws[f'E{i}'] = employee.hour
-        ws[f'F{i}'] = employee.hourjob
-        ws[f'G{i}'] = employee.salarypay
+    for i, employee in enumerate(employees, start=2):
+        ws[f'A{i+1}'] = employee.id
+        ws[f'B{i+1}'] = employee.name
+        ws[f'C{i+1}'] = employee.prename
+        ws[f'D{i+1}'] = employee.salary
+        ws[f'E{i+1}'] = employee.hour
+        ws[f'F{i+1}'] = employee.hourjob
+        ws[f'G{i+1}'] = employee.salarypay
         total_salary_to_pay += employee.salarypay
 
-    total_row = len(employees) + 2    
+    total_row = len(employees) + 3    
     # Set the width of columns B to F to 90px
     for col in range(1, 8):  # Columns A to G
         column_letter = get_column_letter(col)

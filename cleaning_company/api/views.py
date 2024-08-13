@@ -98,6 +98,9 @@ class HourJobView(APIView):
 import os
 from django.http import HttpResponse
 from openpyxl import Workbook
+from openpyxl.utils.cell import get_column_letter
+from openpyxl.styles import Font, PatternFill
+
 from datetime import datetime
 from .models import Employees  # Import your Employees model
 
@@ -112,12 +115,14 @@ def export_to_excel_view(request):
     ws = wb.active
 
     # Set the header row
-    ws['A1'] = 'Employee ID'
-    ws['B1'] = 'Name'
-    ws['C1'] = 'Salary'
-    ws['D1'] = 'Hour'
-    ws['E1'] = 'Hour Job'
-    ws['F1'] = 'Salary to pay'
+    ws.merge_cells['A1:G1'] = 'tablo'
+    ws['A2'] = 'Employee ID'
+    ws['B2'] = 'Name'
+    ws['C2'] = 'Prename'
+    ws['D2'] = 'Salary'
+    ws['E2'] = 'Hour'
+    ws['F2'] = 'Hour Job'
+    ws['G2'] = 'Salary to pay'
 
     # Get the data from the database
     employees = Employees.objects.all()
@@ -126,19 +131,33 @@ def export_to_excel_view(request):
     total_salary_to_pay = 0
 
     # Iterate over the data and write it to the worksheet
-    for i, employee in enumerate(employees, start=2):
+    for i, employee in enumerate(employees, start=3):
         ws[f'A{i}'] = employee.id
         ws[f'B{i}'] = employee.name
-        ws[f'C{i}'] = employee.salary
-        ws[f'D{i}'] = employee.hour
-        ws[f'E{i}'] = employee.hourjob
-        ws[f'F{i}'] = employee.salarypay
+        ws[f'C{i}'] = employee.prename
+        ws[f'D{i}'] = employee.salary
+        ws[f'E{i}'] = employee.hour
+        ws[f'F{i}'] = employee.hourjob
+        ws[f'G{i}'] = employee.salarypay
         total_salary_to_pay += employee.salarypay
 
+    total_row = len(employees) + 2    
+    # Set the width of columns B to F to 90px
+    for col in range(1, 8):  # Columns A to G
+        column_letter = get_column_letter(col)
+        ws.column_dimensions[column_letter].width = 20
+        cell = ws.cell(row=total_row, column=col)
+        cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+        cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+    
+    for i in range(1, ws.max_row + 1):
+        ws.row_dimensions[i].height = 20
+
     # Add a row for the total salary to pay
-    total_row = len(employees) + 2
-    ws[f'F{total_row}'] = f'Total Salary to Pay'
-    ws[f'G{total_row}'] = total_salary_to_pay
+    
+    ws[f'A{total_row}'] = 'Total'
+    ws.merge_cells(f'B{total_row}:G{total_row}')
+    ws[f'B{total_row}'] = total_salary_to_pay
 
     # Create a file response
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

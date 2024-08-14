@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import home from "../home/page";
-import test from "./test";
 import ButtonRM from "./ButtonRM";
+import ShiftingDropDown from "./ShiftingDropDown";
 
 export default function HomePage() {
   // const [error, setError] = useState(null);
@@ -35,14 +34,16 @@ export default function HomePage() {
   // }, [data]);
   return (
     <div className="h-dvh w-dvw p-5">
-      <div className=" relative flex  flex-col h-full w-full bg-p1 rounded-3xl">
+      <div className=" relative flex  flex-col h-full w-full bg-p1 rounded-3xl ">
         <div className=" w-full max-h-14">
           <motion.div
-            className="mx-auto h-14 w-1/2 bg-black rounded-b-3xl"
+            className="mx-auto h-14 w-1/2 bg-black rounded-b-3xl justify-start p-8 text-neutral-200 md:justify-center"
             initial={{ width: 0 }}
             animate={{ width: "50%" }}
             transition={{ duration: 1 }}
-          ></motion.div>
+          >
+            <ShiftingDropDown/>
+          </motion.div>
           <motion.div
             className=" absolute h-5 w-5 top-0 bg-transparent rounded-tr-3xl"
             style={{
@@ -65,24 +66,20 @@ export default function HomePage() {
           />
         </div>
         <div className="flex flex-col h-full w-full p-10">
-          <div className="flex w-max h-max mt-6 justify-center items-center mx-auto playwrite-pe-f1 text-2xl sm:text-5xl lg:text-7xl text-white">
+          <div className="flex w-max h-max mt-6 justify-center select-none items-center mx-auto playwrite-pe-f1 text-2xl sm:text-5xl lg:text-7xl text-white">
             company name
           </div>
-          <div className="flex w-3/5 h-max mt-5 justify-center items-center mx-auto text-zinc-600 text-center">
+          <div className="flex w-3/5 h-max mt-5 justify-center items-center mx-auto select-none text-zinc-600 text-center">
             just some bla bla bla about the company and how is the contene or
             the service that he giv , i just try some word to check if i can do
             it{" "}
           </div>
           <ButtonRM>
-            <Link href="/home">Go to Home</Link>
+            <Link href="/home" className="h-full w-full select-none">
+              Go to Home
+            </Link>
           </ButtonRM>
-          {/* <div className="flex h-14 justify-center items-center mx-auto sm:mx-0 sm:mt-auto sm:ml-auto w-44 bg-black rounded-xl bottom-0 playwrite-pe-f1 ">
-            <Link href="/home">Go to Home</Link>
-          </div> */}
         </div>
-        {/* <div className="text-red-700 bg-black">HomePage</div>
-        <h1>Home Page</h1>
-        <Link href="/home">Go to Home</Link> */}
       </div>
     </div>
   );

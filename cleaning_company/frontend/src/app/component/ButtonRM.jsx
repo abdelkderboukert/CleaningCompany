@@ -38,7 +38,7 @@ const ButtonRM = ({ onClick, children }) => {
       }
     >
       <motion.div
-        className=" absolute -left-10 -bottom-10 bg-orange-500 rounded-full h-1 w-1 border-2 border-black -z-10"
+        className=" absolute -left-10 -bottom-10 bg-green-950 rounded-full h-1 w-1 border-2 border-black -z-10"
         initial={{ height: 0, width: 0, opacity: 1 }}
         animate={
           hoverD
@@ -46,7 +46,7 @@ const ButtonRM = ({ onClick, children }) => {
                 height: 210,
                 width: 290,
                 opacity: 1,
-                transition: { duration: 0.5 },
+                transition: { duration: 0.7 },
               }
             : { height: 0, width: 0, opacity: 1 }
         }
@@ -57,6 +57,7 @@ const ButtonRM = ({ onClick, children }) => {
           opacity: 1,
           transition: { duration: 0.5 },
         }}
+        className="text-white"
       >
         {children}
       </motion.span>

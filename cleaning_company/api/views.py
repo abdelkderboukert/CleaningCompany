@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
 from django.db.models import F
 from datetime import date
+from rest_framework import viewsets
 import os
 from django.http import HttpResponse
 from openpyxl import Workbook
@@ -101,6 +102,34 @@ class HourJobView(APIView):
 
         serializer = EmployeesListeSerializer(employees, many=True)
         return Response(serializer.data)
+    
+# class TodoView(APIView):
+#     def get(self, request):
+#         todo = Todo.objects.all()
+#         serializer = TodoSerializer(todo, many=True)
+#         return Response(serializer.data)
+    
+#     def post(self, request):
+#         serializer = TodoSerializer(data=request.data, context={'request': request})
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#     def patch(self, request, pk):
+#         if pk is None:
+#             # Handle the case where no pk is provided
+#             return Response({'error': 'No pk provided'}, status=status.HTTP_400_BAD_REQUEST)
+#         todo = Todo.objects.get(pk=pk)
+#         serializer = TodoSerializer(todo, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TodoView(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
 
 def export_to_excel_view(request):
     # Get the current date and time

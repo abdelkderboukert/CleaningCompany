@@ -21,3 +21,11 @@ class Employees(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.prename} "
+    
+class Todo(models.Model):
+    title = models.TextField()
+    column = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.title}/{self.column} "
+

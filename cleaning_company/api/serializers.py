@@ -27,3 +27,8 @@ class EmployeesListeSerializer(serializers.ModelSerializer):
 
     def get_salary_per_hour(self, obj):
         return obj.salary_per_hour
+    
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ['id', 'title', 'column']

@@ -75,7 +75,6 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
     const { element } = getNearestIndicator(e, indicators);
 
     const before = element.dataset.before || "-1";
-    console.log(before, element)
 
     if (before !== cardId) {
       let copy = [...cards];
@@ -240,7 +239,6 @@ const BurnBarrel = ({ setCards }) => {
 
   const handleDragEnd = (e) => {
     const cardId = e.dataTransfer.getData("cardId");
-    console.log(cardId)
     setCards((pv) => pv.filter((c) => c.id !== parseInt(cardId)));
     fetch(`http://localhost:8000/api/todo/${parseInt(cardId)}/`, {
       method: "DELETE",

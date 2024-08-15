@@ -229,6 +229,10 @@ const BurnBarrel = ({ setCards }) => {
     e.preventDefault();
     setActive(true);
   };
+  
+  const handleDragStart = (e, card) => {
+    e.dataTransfer.setData("cardId", card.id);
+  };
 
   const handleDragLeave = () => {
     setActive(false);
@@ -236,8 +240,14 @@ const BurnBarrel = ({ setCards }) => {
 
   const handleDragEnd = (e) => {
     const cardId = e.dataTransfer.getData("cardId");
-
-    setCards((pv) => pv.filter((c) => c.id !== cardId));
+    console.log(cardId)
+    setCards((pv) => pv.filter((c) => c.id !== parseInt(cardId)));
+    fetch(`http://localhost:8000/api/todo/${parseInt(cardId)}/`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {})
+      .catch((error) => console.error(error));
 
     setActive(false);
   };

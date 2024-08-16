@@ -66,6 +66,13 @@ export default function SearchBar() {
   const handleSubmit = () => {
     // submit the hours worked for each employee
     console.log(hoursWorked);
+    fetch("http://127.0.0.1:8000/api/hourjob/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hoursWorked),
+    });
     setHoursWorked([])
     // you can make an API call to submit the hours worked here
   };

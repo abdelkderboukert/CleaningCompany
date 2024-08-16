@@ -67,23 +67,24 @@ class DeleteEmployeeView(APIView):
 class HourJobView(APIView):
     def post(self, request):
         data = request.data
-        # .get('data', [])
-        # Validate the incoming data
-        if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
-            return Response({'error': 'Invalid data format'}, status=status.HTTP_400_BAD_REQUEST)
-
         errors = []
-        for item in data:
-            if 'id' not in item or 'hour' not in item:
+        for item in data.values():
+            # Validate the item data
+            if not all(key in item for key in ['date', 'employee', 'hours', 'notes']):
                 errors.append({'error': 'Missing required keys', 'data': item})
                 continue
 
             try:
-                employee = Employees.objects.get(id=int(item['id']))
-                employee.hourjob = F('hourjob') + int(item['hour'])
+                employee = Employees.objects.get(id=item['employee'])
+                print(employee.hourjob)
+                employee.hourjob = employee.hourjob + int(item['hours'])
+                print(employee.hourjob)
                 employee.save()
+                employee.salarypay = F('salary_per_hour') * F('hourjob')
+                employee.save()
+                print(employee)
             except Employees.DoesNotExist:
-                errors.append({'error': f"Employee with id {item['id']} does not exist", 'data': item})
+                errors.append({'error': f"Employee with id {item['employee']} does not exist", 'data': item})
 
         if errors:
             return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)

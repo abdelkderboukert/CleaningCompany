@@ -8,6 +8,10 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 @font-face {
   font-family: Antihero ;
   src: url(../../public/fonts/Antihero.ttf);

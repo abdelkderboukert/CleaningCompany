@@ -19,40 +19,40 @@ const Board = () => {
   useEffect(() => {
     fetch("http://localhost:8000/api/todo/")
       .then((response) => response.json())
-      .then((data) => setCards(data));;
+      .then((data) => setCards(data));
   }, []);
 
   return (
     <div className="flex h-full w-full flex-col lg:flex-row overflow-scroll p-12">
       <div className="flex w-full flex-wrap h-min gap-4">
-      <Column
-        title="Backlog"
-        column="backlog"
-        headingColor="text-neutral-500"
-        cards={cards}
-        setCards={setCards}
-      />
-      <Column
-        title="TODO"
-        column="todo"
-        headingColor="text-yellow-200"
-        cards={cards}
-        setCards={setCards}
-      />
-      <Column
-        title="In progress"
-        column="doing"
-        headingColor="text-blue-200"
-        cards={cards}
-        setCards={setCards}
-      />
-      <Column
-        title="Complete"
-        column="done"
-        headingColor="text-emerald-200"
-        cards={cards}
-        setCards={setCards}
-      />
+        <Column
+          title="Backlog"
+          column="backlog"
+          headingColor="text-neutral-500"
+          cards={cards}
+          setCards={setCards}
+        />
+        <Column
+          title="TODO"
+          column="todo"
+          headingColor="text-yellow-200"
+          cards={cards}
+          setCards={setCards}
+        />
+        <Column
+          title="In progress"
+          column="doing"
+          headingColor="text-blue-200"
+          cards={cards}
+          setCards={setCards}
+        />
+        <Column
+          title="Complete"
+          column="done"
+          headingColor="text-emerald-200"
+          cards={cards}
+          setCards={setCards}
+        />
       </div>
       <BurnBarrel setCards={setCards} />
     </div>
@@ -171,6 +171,7 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
 
   return (
     <div className="w-full md:w-1/4 sm:w-1/3 lg:w-56 shrink-0">
+      {/* w-56 */}
       <div className="mb-3 flex items-center justify-between">
         <h3 className={`font-medium ${headingColor}`}>{title}</h3>
         <span className="rounded text-sm text-neutral-400">
@@ -229,7 +230,7 @@ const BurnBarrel = ({ setCards }) => {
     e.preventDefault();
     setActive(true);
   };
-  
+
   const handleDragStart = (e, card) => {
     e.dataTransfer.setData("cardId", card.id);
   };

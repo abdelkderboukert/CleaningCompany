@@ -6,8 +6,10 @@ import {
   FiChevronDown,
   FiHome,
   FiPieChart,
+  FiCheck
 } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 const ShiftingDropDown = () => {
   return (
@@ -214,11 +216,14 @@ const Pricing = () => {
   return (
     <div className="grid grid-cols-3 gap-4 divide-x divide-neutral-700">
       <a
-        href="#"
+        href="todotask"
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
-        <FiHome className="mb-2 text-xl text-green-800" />
-        <span className="text-xs">Startup</span>
+        <FiCheck className="mb-2 text-xl text-green-800" />
+        {/* FiHome */}
+        {/* <span className="text-xs">Todo</span> */}
+        <Link href="/todotask">Todo</Link>
+        {/* Startup */}
       </a>
       <a
         href="#"

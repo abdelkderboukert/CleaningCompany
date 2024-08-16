@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import ButtonRM from "./ButtonRM";
 import ShiftingDropDown from "./ShiftingDropDown";
+// import AnimatedListDemo from "./animatedListe";
 
 export default function HomePage() {
   // const [error, setError] = useState(null);
@@ -81,6 +82,7 @@ export default function HomePage() {
           </ButtonRM>
         </div>
       </div>
+      {/* <AnimatedListDemo/> */}
     </div>
   );
 }

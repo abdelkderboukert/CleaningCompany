@@ -3,11 +3,17 @@ import React, { useState, useEffect } from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
+import NavBar from "../component/NavBar";
 
 const CustomKanban = () => {
   return (
-    <div className="h-screen w-full bg-neutral-900 text-neutral-50">
-      <Board />
+    <div className=" fixed h-screen w-full bg-black overflow-auto text-neutral-50">
+      <div className="h-dvh w-dvw p-5">
+        <div className=" relative flex  flex-col h-full w-full rounded-3xl overflow-auto bg-neutral-900">
+          <NavBar />
+          <Board />
+        </div>
+      </div>
     </div>
   );
 };

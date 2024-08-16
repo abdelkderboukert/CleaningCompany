@@ -6,7 +6,9 @@ import {
   FiChevronDown,
   FiHome,
   FiPieChart,
-  FiCheck
+  FiCheck,
+  FiTable,
+  FiList
 } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -238,6 +240,33 @@ const Pricing = () => {
       >
         <FiPieChart className="mb-2 text-xl text-green-800" />
         <span className="text-xs">Enterprise</span>
+      </a>
+      <a
+        href=""
+        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
+      >
+        <FiHome className="mb-2 text-xl text-green-800" />
+        <Link href="/">
+          <span className="text-xs">Home</span>
+        </Link>
+      </a>
+      <a
+        href="attendance"
+        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
+      >
+        <FiTable className="mb-2 text-xl text-green-800" />
+        <Link href="/attendance">
+          <span className="text-xs">Attendance</span>
+        </Link>
+      </a>
+      <a
+        href="employees"
+        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
+      >
+        <FiList className="mb-2 text-xl text-green-800" />
+        <Link href="/employees">
+          <span className="text-xs">Employees</span>
+        </Link>
       </a>
     </div>
   );

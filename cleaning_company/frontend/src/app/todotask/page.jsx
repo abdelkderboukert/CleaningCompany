@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
+import NavBar from "../component/NavBar";
 
 const CustomKanban = () => {
   return (
-    <div className="h-screen w-full bg-neutral-900 text-neutral-50">
+    <div className="fixed h-screen w-full bg-neutral-900 overflow-auto text-neutral-50">
+      <NavBar />
       <Board />
     </div>
   );

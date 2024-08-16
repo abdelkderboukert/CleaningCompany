@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
-from django.db.models import F
+from django.db.models import F,Q
 from datetime import date
 from rest_framework import viewsets
 import os
@@ -43,7 +43,7 @@ class EmployeeView(APIView):
     def get(self, request):
         query = request.GET.get('q')
         if query:
-            Employee = Employees.objects.filter(name__icontains=query)
+            Employee = Employees.objects.filter(Q(name__icontains=query) | Q(prename__icontains=query))
         else:
             Employee = Employees.objects.all()
         serializer = EmployeesListeSerializer(Employee, many=True)

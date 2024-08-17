@@ -43,7 +43,7 @@ export default function HomePage() {
             animate={{ width: "50%" }}
             transition={{ duration: 1 }}
           >
-            <ShiftingDropDown/>
+            <ShiftingDropDown />
           </motion.div>
           <motion.div
             className=" absolute h-5 w-5 top-0 bg-transparent rounded-tr-3xl"
@@ -76,8 +76,8 @@ export default function HomePage() {
             it{" "}
           </div>
           <ButtonRM>
-            <Link href="/home" className="h-full w-full select-none">
-              Go to Home
+            <Link href="/attendance" className="h-full w-full select-none">
+              Attendance
             </Link>
           </ButtonRM>
         </div>

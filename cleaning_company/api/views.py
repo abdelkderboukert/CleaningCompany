@@ -57,6 +57,13 @@ class EmployeeView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def delete(self, request, pk):
+        employee = Employees.objects.get(pk=pk)
+        if employee:
+            employee.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
 class DeleteEmployeeView(APIView):
     def delete(self, request, pk):
         try:
@@ -80,7 +87,7 @@ class HourJobView(APIView):
                 employee = Employees.objects.get(id=item['employee'])
                 attendance = Attendance.objects.create(
                     employee=employee,
-                    note=item['notes'],
+                    notes=item['notes'],
                     hours=item['hours'],
                     date=item['date']
                 )

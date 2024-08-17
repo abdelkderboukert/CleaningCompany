@@ -4,6 +4,7 @@ from .views import *
 urlpatterns = [
     path('create/', CreateEmployeeView.as_view(), name='create'),
     path('Employee/', EmployeeView.as_view(), name='employee'),
+    path('employee/<int:pk>/', EmployeeView.as_view()),
     path('hourjob/', HourJobView.as_view(), name='hourjob'),
     path('todo/', TodoView.as_view({'get': 'list', 'post': 'create'}), name='todo_list'),
     path('todo/<int:pk>/', TodoView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='todo_detail'),

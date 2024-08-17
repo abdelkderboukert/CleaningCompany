@@ -1,11 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MoreInfo from "./moreInfo";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [employee, setEmployee] = useState([]);
+  const [SelectedEmployee, setSelectedEmployee] = useState([]);
   const [hoursWorked, setHoursWorked] = useState([]); // store hours worked for each employee
+  const [showClientInfo, setShowClientInfo] = useState(false);
+
+  const handleButtonClick = (mployee) => {
+    setShowClientInfo(true);
+    setSelectedEmployee(mployee);
+  };
+
+  const handleCloseClientInfo = () => {
+    setShowClientInfo(false);
+  };
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -65,7 +77,6 @@ export default function SearchBar() {
 
   const handleSubmit = () => {
     // submit the hours worked for each employee
-    console.log(hoursWorked);
     fetch("http://127.0.0.1:8000/api/hourjob/", {
       method: "POST",
       headers: {
@@ -123,7 +134,7 @@ export default function SearchBar() {
                 Reset Hours
               </button>
               <button
-                onClick={() => handleResetHours(mployee.id)}
+                onClick={() => handleButtonClick(mployee)}
                 className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
               >
                 more
@@ -138,6 +149,12 @@ export default function SearchBar() {
       >
         Submit Hours Worked
       </button>
+      {showClientInfo && (
+        <MoreInfo
+          handleCloseClientInfo={handleCloseClientInfo}
+          employee={SelectedEmployee}
+        />
+      )}
     </div>
   );
 }

@@ -29,3 +29,12 @@ class Todo(models.Model):
     def __str__(self):
         return f"{self.title}/{self.column} "
 
+
+class Attendance(models.Model):
+    employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    notes = models.TextField()
+    hours = models.CharField(max_length=2)
+    date = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.employee.name} {self.employee.prename} - {self.date}/{self.hours}/{self.notes} "

@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
 from django.db.models import F,Q
 from datetime import date
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 import os
 from django.http import HttpResponse
 from openpyxl import Workbook
@@ -21,7 +21,8 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 import openpyxl
 from datetime import datetime
 from django.db.models import F
-from .models import Employees  # Import your Employees model
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import *  # Import your Employees model
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -75,14 +76,19 @@ class HourJobView(APIView):
                 continue
 
             try:
+                
                 employee = Employees.objects.get(id=item['employee'])
-                print(employee.hourjob)
+                attendance = Attendance.objects.create(
+                    employee=employee,
+                    note=item['notes'],
+                    hours=item['hours'],
+                    date=item['date']
+                )
+                attendance.save()
                 employee.hourjob = employee.hourjob + int(item['hours'])
-                print(employee.hourjob)
                 employee.save()
                 employee.salarypay = F('salary_per_hour') * F('hourjob')
                 employee.save()
-                print(employee)
             except Employees.DoesNotExist:
                 errors.append({'error': f"Employee with id {item['employee']} does not exist", 'data': item})
 
@@ -131,6 +137,16 @@ class HourJobView(APIView):
 class TodoView(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+
+class AttendanceView(APIView):
+    def get(self, request):
+        query = request.GET.get('q')
+        if query:
+            Attendanc = Attendance.objects.filter(employee_id=int(query))
+        else:
+            Attendanc = Attendance.objects.all()
+        serializer = AttendanceSerializer(Attendanc, many=True)
+        return Response(serializer.data)
 
 def export_to_excel_view(request):
     # Get the current date and time

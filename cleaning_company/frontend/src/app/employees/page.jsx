@@ -26,9 +26,7 @@ const Employee = () => {
 
   const handleButtonClick = (mployee) => {
     setShowClientInfo(true);
-    console.log(showClientInfo);
     setSelectedEmployee(mployee);
-    console.log(selectedEmployee)
   };
 
   const handleCloseClientInfo = () => {
@@ -89,17 +87,32 @@ const Employee = () => {
             className="sticky top-0 h-12 w-full sm:w-2/5 rounded-xl bg-black p-2"
           />
           <div className="text-white text-3xl my-12">Employees:</div>
-          <ul>
+          <motion.ul
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.25,
+                },
+              },
+            }}
+            initial="hidden"
+            animate="show"
+            className="container grid md:grid-cols-2 gap-4"
+          >
             {employee.map((mployee) => (
               <motion.li
                 key={employee.id}
-                initial={{ opacity: 1, scale: 1 }}
-                animate={
-                  deletingId === employee.id
-                    ? { opacity: 0, scale: 0.5 }
-                    : { opacity: 1, scale: 1 }
-                }
-                transition={{ duration: 0.5 }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
                 className="felx min-h-16 max-h-min w-full bg-neutral-800 m-3 rounded-xl p-5 felx-row transition-opacity"
               >
                 <span className="flex w-100% sm:w-2/6 md:text-2xl">
@@ -122,9 +135,9 @@ const Employee = () => {
                 </div>
               </motion.li>
             ))}
-          </ul>
+          </motion.ul>
           <button
-            onClick={{}}
+            onClick={() => console.log("Button clicked")}
             className="flex ml-auto bg-green-900 hover:bg-green-800 justify-center items-center h-12 w-full md:w-1/6 rounded-xl playwrite-pe-f1"
           >
             Submit Hours Worked
@@ -141,39 +154,120 @@ const Employee = () => {
   );
 };
 
-const Info = (employee, handleCloseClientInfo) => {
-  <div
-    className="fixed top-0 left-0 w-full h-full bg-gradient-to-bkt text-black z-50 flex justify-center items-center"
-    onClick={handleCloseClientInfo}
-  >
-    <motion.div className=" relative h-[90vh] w-[90vw] bg-neutral-900 rounded-3xl p-5">
-      <div className="h-full w-full rounded-2xl border-2 border-black p-5 overflow-scroll">
-        <div className="text-white text-3xl mb-12">
-          <span className=" sticky top-0 playwrite-pe-f1">
-            {employee.prename} {employee.name}:
-          </span>
-          {/* <ul>
-            {attendances.map((attendance) => (
-              <li
-                key={attendance.id}
-                className=" flex min-h-16 max-h-min w-full bg-neutral-800 m-3 rounded-xl p-5 flex-row overflow-auto"
+const Info = ({employee, handleCloseClientInfo}) => {
+  return (
+    <div
+      className="fixed top-0 left-0 w-full h-full bg-gradient-to-bkt text-black z-50 flex justify-center items-center"
+      onClick={handleCloseClientInfo}
+    >
+      <motion.div className=" relative h-[90vh] w-[90vw] bg-neutral-900 rounded-3xl p-5">
+        <div className="h-full w-full rounded-2xl border-2 border-black p-5 overflow-scroll">
+          <div className="text-white text-3xl h-full w-full">
+            <span className=" sticky top-0 playwrite-pe-f1">
+              {employee.prename} {employee.name}:
+            </span>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.25,
+                  },
+                },
+              }}
+              initial="hidden"
+              animate="show"
+              className="h-full w-full min-h-min container grid md:grid-cols-2 gap-4 p-3"
+            >
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
               >
-                <div className="flex max-h-min min-h-16 w-1/3 justify-center items-center flex-col p-2">
-                  date
-                  <span className="text-5xl my-2">{attendance.date}</span>
-                </div>
-                <div className="flex max-h-min min-h-16 w-1/3 justify-center items-center flex-col p-2">
-                  Hours
-                  <span className="text-5xl my-2">{attendance.hours}H</span>
-                </div>
-                <div className="flex max-h-min min-h-16 w-1/3 justify-center items-center flex-col p-2">
-                  <span className="text-2xl my-2">{attendance.notes}H</span>
-                </div>
-              </li>
-            ))}
-          </ul> */}
+                0{employee.phone}
+              </motion.div>
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
+              >
+                {employee.hour}H
+              </motion.div>
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
+              >
+                {employee.salary}DA
+              </motion.div>
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
+              >
+                {employee.hourjob}H
+              </motion.div>
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
+              >
+                {employee.salary_per_hour}DA/H
+              </motion.div>
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.25,
+                    },
+                  },
+                }}
+                class="item p-4 border-2 border-black rounded-2xl"
+              >
+                {employee.card}
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </motion.div>
-  </div>;
+      </motion.div>
+    </div>
+  );
 };

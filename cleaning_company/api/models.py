@@ -7,7 +7,7 @@ class Employees(models.Model):
     phone = models.IntegerField(default=0)
     salary = models.IntegerField(default=0)
     salarypay = models.IntegerField(default=0)
-    card = models.CharField(max_length=25)
+    card = models.CharField(max_length=25, unique=True)
     hour = models.IntegerField(default=0)
     hourjob = models.IntegerField(default=0)
     salary_per_hour = models.IntegerField(default=0)

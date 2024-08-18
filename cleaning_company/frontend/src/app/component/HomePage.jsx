@@ -68,7 +68,7 @@ export default function HomePage() {
         </div>
         <div className="flex flex-col h-full w-full p-10">
           <div className="flex w-max h-max mt-6 justify-center select-none items-center mx-auto playwrite-pe-f1 text-2xl sm:text-5xl lg:text-7xl text-white">
-            company name
+            EURL KAHIBL TCE
           </div>
           <div className="flex w-3/5 h-max mt-5 justify-center items-center mx-auto select-none text-zinc-600 text-center">
             just some bla bla bla about the company and how is the contene or

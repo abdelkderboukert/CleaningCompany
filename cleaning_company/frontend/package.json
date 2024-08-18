@@ -7,9 +7,10 @@
     "build": "next build",
     "export": "next export",
     "start": "next start",
-    "lint": "next lint"
+    "package": "node ./build.js"
   },
   "dependencies": {
+    "@angablue/exe": "^3.2.3",
     "axios": "^1.7.4",
     "framer-motion": "^11.3.24",
     "lenis": "^1.1.9",

@@ -178,7 +178,7 @@ const Info = ({employee, handleCloseClientInfo}) => {
               }}
               initial="hidden"
               animate="show"
-              className="h-full w-full min-h-min container grid md:grid-cols-2 gap-4 p-3"
+              className="h-full w-full min-h-min container grid md:grid-cols-2 gap-4 p-3 justify-center items-center"
             >
               <motion.div
                 variants={{
@@ -190,9 +190,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 0{employee.phone}
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  N°phon
+                </div>
               </motion.div>
               <motion.div
                 variants={{
@@ -204,9 +207,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 {employee.hour}H
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  hour
+                </div>
               </motion.div>
               <motion.div
                 variants={{
@@ -218,9 +224,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 {employee.salary}DA
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  salary
+                </div>
               </motion.div>
               <motion.div
                 variants={{
@@ -232,9 +241,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 {employee.hourjob}H
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  hour&nbsp;job
+                </div>
               </motion.div>
               <motion.div
                 variants={{
@@ -246,9 +258,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 {employee.salary_per_hour}DA/H
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  salary&nbsp;per&nbsp;hour
+                </div>
               </motion.div>
               <motion.div
                 variants={{
@@ -260,9 +275,12 @@ const Info = ({employee, handleCloseClientInfo}) => {
                     },
                   },
                 }}
-                class="item p-4 border-2 border-black rounded-2xl"
+                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
               >
                 {employee.card}
+                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                  N°card
+                </div>
               </motion.div>
             </motion.div>
           </div>

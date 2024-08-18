@@ -165,21 +165,36 @@ const Nub = ({ selected }) => {
 };
 
 const Products = () => {
+  const [cards, setCards] = useState([]);
+  // DEFAULT_CARDS
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/todo/")
+      .then((response) => response.json())
+      .then((data) => {setCards(data)});
+  }, []);
+
   return (
     <div>
       <div className="flex gap-4">
         <div>
           <h3 className="mb-2 text-sm font-medium">Startup</h3>
-          <a href="#" className="mb-1 block text-sm text-neutral-400">
+          {/* <a href="#" className="mb-1 block text-sm text-neutral-400">
             Bookkeeping
           </a>
           <a href="#" className="block text-sm text-neutral-400">
             Invoicing
-          </a>
+          </a> */}
+          {cards
+            .filter((card) => card.column === "doing")
+            .slice(-3)
+            .map((card) => (
+              <div key={card.id}>{card.title}</div>
+            ))}
         </div>
         <div>
-          <h3 className="mb-2 text-sm font-medium">Scaleup</h3>
-          <a href="#" className="mb-1 block text-sm text-neutral-400">
+          <h3 className="mb-2 text-sm font-medium">Todo</h3>
+          {/* <a href="#" className="mb-1 block text-sm text-neutral-400">
             Live Coaching
           </a>
           <a href="#" className="mb-1 block text-sm text-neutral-400">
@@ -187,11 +202,17 @@ const Products = () => {
           </a>
           <a href="#" className="block text-sm text-neutral-400">
             Tax/VAT
-          </a>
+          </a> */}
+          {cards
+            .filter((card) => card.column === "doing")
+            .slice(-3)
+            .map((card) => (
+              <div key={card.id}>{card.title}</div>
+            ))}
         </div>
         <div>
           <h3 className="mb-2 text-sm font-medium">Enterprise</h3>
-          <a href="#" className="mb-1 block text-sm text-neutral-400">
+          {/* <a href="#" className="mb-1 block text-sm text-neutral-400">
             White glove
           </a>
           <a href="#" className="mb-1 block text-sm text-neutral-400">
@@ -202,7 +223,13 @@ const Products = () => {
           </a>
           <a href="#" className="block text-sm text-neutral-400">
             More
-          </a>
+          </a> */}
+          {cards
+            .filter((card) => card.column === "doing")
+            .slice(-3)
+            .map((card) => (
+              <div key={card.id}>{card.title}</div>
+            ))}
         </div>
       </div>
 
@@ -218,14 +245,20 @@ const Pricing = () => {
   return (
     <div className="grid grid-cols-3 gap-4 divide-x divide-neutral-700">
       <a
+        href=""
+        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
+      >
+        <FiHome className="mb-2 text-xl text-green-800" />
+        <Link href="/">
+          <span className="text-xs">Home</span>
+        </Link>
+      </a>
+      <a
         href="todotask"
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiCheck className="mb-2 text-xl text-green-800" />
-        {/* FiHome */}
-        {/* <span className="text-xs">Todo</span> */}
         <Link href="/todotask">Todo</Link>
-        {/* Startup */}
       </a>
       <a
         href="#"
@@ -241,15 +274,7 @@ const Pricing = () => {
         <FiPieChart className="mb-2 text-xl text-green-800" />
         <span className="text-xs">Enterprise</span>
       </a>
-      <a
-        href=""
-        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
-      >
-        <FiHome className="mb-2 text-xl text-green-800" />
-        <Link href="/">
-          <span className="text-xs">Home</span>
-        </Link>
-      </a>
+      
       <a
         href="attendance"
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"

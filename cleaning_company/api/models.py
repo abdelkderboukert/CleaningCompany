@@ -10,6 +10,7 @@ class Employees(models.Model):
     card = models.CharField(max_length=25, unique=True)
     hour = models.IntegerField(default=0)
     hourjob = models.IntegerField(default=0)
+    accompte = models.IntegerField(default=0)
     salary_per_hour = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):

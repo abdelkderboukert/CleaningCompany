@@ -178,7 +178,7 @@ const Products = () => {
     <div>
       <div className="flex gap-4">
         <div>
-          <h3 className="mb-2 text-sm font-medium">Startup</h3>
+          <h3 className="mb-2 text-sm font-medium">Backlog</h3>
           {/* <a href="#" className="mb-1 block text-sm text-neutral-400">
             Bookkeeping
           </a>
@@ -186,7 +186,7 @@ const Products = () => {
             Invoicing
           </a> */}
           {cards
-            .filter((card) => card.column === "doing")
+            .filter((card) => card.column === "backlog")
             .slice(-3)
             .map((card) => (
               <div key={card.id}>{card.title}</div>
@@ -204,14 +204,14 @@ const Products = () => {
             Tax/VAT
           </a> */}
           {cards
-            .filter((card) => card.column === "doing")
+            .filter((card) => card.column === "todo")
             .slice(-3)
             .map((card) => (
               <div key={card.id}>{card.title}</div>
             ))}
         </div>
         <div>
-          <h3 className="mb-2 text-sm font-medium">Enterprise</h3>
+          <h3 className="mb-2 text-sm font-medium">In progress</h3>
           {/* <a href="#" className="mb-1 block text-sm text-neutral-400">
             White glove
           </a>
@@ -234,7 +234,7 @@ const Products = () => {
       </div>
 
       <button className="ml-auto mt-4 flex items-center gap-1 text-sm text-green-800">
-        <span>View more</span>
+        <Link href="todotask">View more</Link>
         <FiArrowRight />
       </button>
     </div>

@@ -94,7 +94,7 @@ class HourJobView(APIView):
                 attendance.save()
                 employee.hourjob = employee.hourjob + int(item['hours'])
                 employee.save()
-                employee.salarypay = F('salary_per_hour') * F('hourjob')
+                employee.salarypay = F('salary_per_hour') * F('hourjob') - F('accompte')
                 employee.save()
             except Employees.DoesNotExist:
                 errors.append({'error': f"Employee with id {item['employee']} does not exist", 'data': item})

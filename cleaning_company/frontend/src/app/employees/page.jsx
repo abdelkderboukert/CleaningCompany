@@ -122,13 +122,15 @@ const Employee = () => {
                 <div className="flex h-12 w-full px-5 items-center">
                   <button
                     onClick={() => handleDeleteEmployee(mployee.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
+                    // className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
+                    className="hover:bg-neutral-700 text-red-500 font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => handleButtonClick(mployee)}
-                    className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
+                    // className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
+                    className="hover:bg-neutral-700 text-blue-600 font-bold py-2 px-4 mx-1 rounded playwrite-pe-f1"
                   >
                     more
                   </button>
@@ -180,108 +182,32 @@ const Info = ({employee, handleCloseClientInfo}) => {
               animate="show"
               className="h-full w-full min-h-min container grid md:grid-cols-2 gap-4 p-3 justify-center items-center"
             >
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                0{employee.phone}
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  N°phon
-                </div>
-              </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                {employee.hour}H
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  hour
-                </div>
-              </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                {employee.salary}DA
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  salary
-                </div>
-              </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                {employee.hourjob}H
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  hour&nbsp;job
-                </div>
-              </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                {employee.salary_per_hour}DA/H
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  salary&nbsp;per&nbsp;hour
-                </div>
-              </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.25,
-                    },
-                  },
-                }}
-                class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
-              >
-                {employee.card}
-                <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
-                  N°card
-                </div>
-              </motion.div>
+              {Object.keys(employee).map(
+                (key, index) =>
+                  !["id", "name", "prename"].includes(key) && (
+                    <p key={index}>
+                      {/* {key}: {employee[key]} */}
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0 },
+                          show: {
+                            opacity: 1,
+                            transition: {
+                              staggerChildren: 0.25,
+                            },
+                          },
+                        }}
+                        key={index}
+                        class="flex relative item p-4 border-2 border-black rounded-2xl items-center"
+                      >
+                        {employee[key]}
+                        <div className=" absolute max-h-min max-w-min bg-neutral-900 -top-4 text-lg">
+                          {key}
+                        </div>
+                      </motion.div>
+                    </p>
+                  )
+              )}
             </motion.div>
           </div>
         </div>

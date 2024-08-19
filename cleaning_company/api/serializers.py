@@ -23,7 +23,7 @@ class EmployeesListeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employees
-        fields = ['id', 'name', 'prename', 'card', 'phone', 'salary', 'hour', 'hourjob', 'salary_per_hour', 'accompte']
+        fields = ['id', 'name', 'prename', 'card', 'phone', 'salary', 'hour', 'hourjob', 'salary_per_hour', 'accompte', 'salarypay']
 
     def get_salary_per_hour(self, obj):
         return obj.salary_per_hour

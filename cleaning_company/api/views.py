@@ -155,6 +155,10 @@ class AttendanceView(APIView):
         serializer = AttendanceSerializer(Attendanc, many=True)
         return Response(serializer.data)
 
+class TarifView(viewsets.ModelViewSet):
+    queryset = Tarif.objects.all()
+    serializer_class = TarifSerializer
+
 def export_to_excel_view(request):
     # Get the current date and time
     now = datetime.now()

@@ -8,7 +8,8 @@ import {
   FiPieChart,
   FiCheck,
   FiTable,
-  FiList
+  FiList,
+  FiDollarSign
 } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -244,55 +245,52 @@ const Products = () => {
 const Pricing = () => {
   return (
     <div className="grid grid-cols-3 gap-4 divide-x divide-neutral-700">
-      <a
-        href=""
+      <div
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiHome className="mb-2 text-xl text-green-800" />
         <Link href="/">
           <span className="text-xs">Home</span>
         </Link>
-      </a>
-      <a
+      </div>
+      <div
         href="todotask"
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiCheck className="mb-2 text-xl text-green-800" />
         <Link href="/todotask">Todo</Link>
-      </a>
-      <a
-        href="#"
+      </div>
+      <div
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
-        <FiBarChart2 className="mb-2 text-xl text-green-800" />
-        <span className="text-xs">Scaleup</span>
-      </a>
-      <a
-        href="#"
+        <FiDollarSign className="mb-2 text-xl text-green-800" />
+        <Link href="/tarif">
+          <span className="text-xs">Tarif</span>
+        </Link>
+      </div>
+      <div
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiPieChart className="mb-2 text-xl text-green-800" />
         <span className="text-xs">Enterprise</span>
-      </a>
-      
-      <a
-        href="attendance"
+      </div>
+
+      <div
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiTable className="mb-2 text-xl text-green-800" />
         <Link href="/attendance">
           <span className="text-xs">Attendance</span>
         </Link>
-      </a>
-      <a
-        href="employees"
+      </div>
+      <div
         className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
       >
         <FiList className="mb-2 text-xl text-green-800" />
         <Link href="/employees">
           <span className="text-xs">Employees</span>
         </Link>
-      </a>
+      </div>
     </div>
   );
 };

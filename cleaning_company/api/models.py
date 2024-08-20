@@ -39,3 +39,12 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.employee.name} {self.employee.prename} - {self.date}/{self.hours}/{self.notes} "
+    
+
+class Tarif(models.Model):
+    item = models.CharField(max_length=25,null=False)
+    monto = models.IntegerField(default=0)
+    date = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.item}:{self.monto}DA - {self.date} "

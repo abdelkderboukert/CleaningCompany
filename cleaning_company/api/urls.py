@@ -10,4 +10,6 @@ urlpatterns = [
     path('todo/<int:pk>/', TodoView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='todo_detail'),
     path('export_to_excel/', export_to_excel_view, name='export_to_excel'),
     path('attendance/', AttendanceView.as_view(), name='attendance_list'),
+    path('tarif/', TarifView.as_view({'get': 'list', 'post': 'create'}), name='tarif_list'),
+    path('tarif/<int:pk>/', TarifView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='tarif_detail'),
 ]

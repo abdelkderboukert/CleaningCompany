@@ -1,10 +1,4 @@
 @ECHO off
-if "%1" == "hide" goto hide
-    start /b "" "%~0" hide
-    exit /b
-
-:hide
-WHERE /q node
 start explorer http://localhost:3000
 IF %ERRORLEVEL% NEQ 0 ( ECHO "node wasn't found, installing nvm to install node" 
 

@@ -37,3 +37,8 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ['id', 'date', 'employee', 'hours', 'notes']
+
+class TarifSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tarif
+        fields = ['id', 'item', 'monto', 'date']

@@ -111,12 +111,14 @@ export default function SearchBar() {
             <div className="flex h-12 w-full px-5 items-center">
               <input
                 type="number"
+                min={0}
+                max={12}
                 value={
                   hoursWorked[mployee.id] ? hoursWorked[mployee.id].hours : ""
                 }
                 onChange={(event) => handleHoursChange(event, mployee.id)}
                 placeholder="Enter hours worked"
-                className="bg-black h-full w-1/4 rounded-xl px-3 mr-5"
+                className="bg-black h-full w-full md:w-1/4 rounded-xl px-3 mr-5"
               />
               <input
                 type="text"

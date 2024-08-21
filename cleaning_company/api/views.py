@@ -248,3 +248,94 @@ def export_to_excel_view(request):
 
     # Return the response
     return response
+
+
+def export_to_excel_view2(request):
+    # Get the current date and time
+    now = datetime.now()
+
+    # Create a new Excel workbook
+    wb = Workbook()
+
+    # Get the active worksheet
+    ws = wb.active
+    
+    tabel = f'employees_{now.strftime("%Y-%m")}'
+
+    # Set the header row
+    ws.merge_cells('A1:D1')
+    cell = ws['A1']
+    cell.value = tabel
+    cell.alignment = openpyxl.styles.Alignment(horizontal='center', vertical='center')
+    cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+    cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+
+    # Add borders to the header row
+    border = Border(left=Side(style='thin'),
+                    right=Side(style='thin'),
+                    top=Side(style='thin'),
+                    bottom=Side(style='thin'))
+    cell.border = border
+
+    for col in range(1, 5):
+        cell = ws.cell(row=2, column=col)
+        cell.fill = PatternFill(start_color='FFFF00', fill_type='solid')
+        cell.font = Font(bold=True, color='FFFFFF', size=14)
+        cell.border = border  # Add border to each cell in the header row
+
+    ws['A2'] = 'tarif ID'
+    ws['B2'] = 'item'
+    ws['C2'] = 'prix'
+    ws['D2'] = 'date'
+
+
+    # Get the data from the database
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    tarifs = Tarif.objects.filter(date__contains=f"{current_year}-{current_month:02}-")
+
+
+    # Initialize total salary to pay
+    total_tarif = 0
+
+    # Iterate over the data and write it to the worksheet
+    for i, tarif in enumerate(tarifs, start=2):
+        ws[f'A{i+1}'] = tarif.id
+        ws[f'B{i+1}'] = tarif.item
+        ws[f'C{i+1}'] = tarif.monto
+        ws[f'D{i+1}'] = tarif.date
+        total_tarif += tarif.monto
+
+        # Add borders to each cell in the data rows
+        for col in range(1, 5):
+            cell = ws.cell(row=i+1, column=col)
+            cell.border = border
+
+    total_row = len(tarifs) + 3    
+    # Set the width of columns B to F to 90px
+    for col in range(1, 5):  # Columns A to D
+        column_letter = get_column_letter(col)
+        ws.column_dimensions[column_letter].width = 20
+        cell = ws.cell(row=total_row, column=col)
+        cell.font = Font(bold=True, color='FFFFFF', size=16)  # White bold text
+        cell.fill = PatternFill(start_color='0000FF', fill_type='solid')  # Blue fill
+        cell.border = border  # Add border to each cell in the total row
+    
+    for i in range(1, ws.max_row + 1):
+        ws.row_dimensions[i].height = 20
+
+    # Add a row for the total salary to pay
+    
+    ws[f'A{total_row}'] = 'Total'
+    ws.merge_cells(f'B{total_row}:D{total_row}')
+    ws[f'B{total_row}'] = total_tarif
+
+    # Create a file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="tarif_{now.strftime("%Y-%m")}.xlsx"'
+
+    # Save the workbook to the response
+    wb.save(response)
+
+    # Return the response
+    return response

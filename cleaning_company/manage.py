@@ -45,11 +45,11 @@ def main():
     if sys.argv[1] == 'runserver' and not os.path.exists('.celery_started'):
         with open('.celery_started', 'w') as f:
             f.write('True')
-            # cmd = f"cd {frontend_dir} & run-next.bat"
-            # startupinfo = subprocess.STARTUPINFO()
-            # startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            # startupinfo.wShowWindow = subprocess.SW_HIDE
-            # subprocess.Popen(cmd, shell=True, startupinfo=startupinfo)
+            cmd = f"cd {frontend_dir} & run-next.bat"
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = subprocess.SW_HIDE
+            subprocess.Popen(cmd, shell=True, startupinfo=startupinfo)
     elif os.path.exists('.celery_started'):
         os.remove('.celery_started')
 

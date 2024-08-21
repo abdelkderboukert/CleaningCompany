@@ -206,7 +206,7 @@ scheduler = BackgroundScheduler()
 
 scheduler.add_job(export_to_excel, 'cron', month='*', day='1')
 scheduler.add_job(export_to_excel_tarif, 'cron', month='*', day='1')
-scheduler.add_job(test, 'interval', seconds=30)
+# scheduler.add_job(test, 'interval', seconds=30)
 scheduler.add_job(my_task, 'cron', month='*', day='1', hour='0', minute='10')
 scheduler.start()
 

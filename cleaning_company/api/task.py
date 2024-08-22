@@ -17,6 +17,7 @@ def my_task():
     print("Running my task!")
     Employees.objects.all().update(hourjob=0)
 
+
 def export_to_excel():
     # Get the current date and time
     now = datetime.now()
@@ -191,9 +192,11 @@ def export_to_excel_tarif():
 
     # Save the workbook to a file
     wb.save(filename)
+    Tarif.objects.all().delete()
 
     # Return the filename
     return filename
+    
 
 def test():
     print("is runing")

@@ -51,6 +51,11 @@ const Tarif = () => {
 
       setNewTarif({ item: "", monto: 0 }); // Reset NewTarif state
       setISshow(false); // Hide the form
+      useEffect(() => {
+        fetch("http://localhost:8000/api/tarif/")
+          .then((response) => response.json())
+          .then((data) => setTarif(data));
+      }, []);
     }
      
     const currentYear = new Date().getFullYear();

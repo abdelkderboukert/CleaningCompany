@@ -12,13 +12,13 @@ export default function MoreInfo({ employee, handleCloseClientInfo }) {
           `http://localhost:8000/api/attendance/?q=${employee.id}`
         );
         setAttendance(response.data);
-        console.log(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchEmployee();
-  }, []);
+  }, [employee.id]);
   return (
     <div
       className="fixed top-0 left-0 w-full h-full bg-gradient-to-bkt text-black z-50 flex justify-center items-center"

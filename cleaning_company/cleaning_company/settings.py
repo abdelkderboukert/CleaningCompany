@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'rest_framework',
+    'rest_framework_jwt',
     'corsheaders',
     'celery',
     "django_nextjs",
-    'apscheduler'
+    'apscheduler',
 ]
 
 MIDDLEWARE = [
@@ -164,4 +166,17 @@ APSCHEDULER_CONFIG = {
     },
     'apscheduler.job_defaults.coalesce': False,
     'apscheduler.job_defaults.max_instances': 1,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': 'your-secret-key',
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=30),  # 30 minutes
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=30),  # 7 days
 }

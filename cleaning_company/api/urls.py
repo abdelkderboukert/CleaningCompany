@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('create/', CreateEmployeeView.as_view(), name='create'),
     path('Employee/', EmployeeView.as_view(), name='employee'),
     path('employee/<int:pk>/', EmployeeView.as_view()),

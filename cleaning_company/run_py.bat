@@ -46,7 +46,7 @@ REM Run the Django project
 cd cleaning_company
 echo Running Django project...
 python manage.py runserver
-start explorer http://localhost:3000
+@REM start explorer http://localhost:3000
 
 @REM set url=https://endoflife.date/api/python.json
 

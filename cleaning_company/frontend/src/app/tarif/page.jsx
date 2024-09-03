@@ -191,7 +191,7 @@ const Tarif = () => {
                   {tarif.item}&nbsp;
                 </span>
                 <span className="text-neutral-500">
-                  Prix:{tarif.monto}&nbsp;{tarif.date}
+                  Prix:{tarif.monto}&nbsp;{tarif.date}.00&nbsp;DA
                 </span>
               </motion.li>
             ))}

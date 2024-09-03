@@ -30,7 +30,7 @@ pillow==10.2.0
 prompt_toolkit==3.0.47
 pycares==4.4.0
 pycparser==2.21
-PyJWT==2.8.0
+PyJWT
 python-dateutil==2.9.0.post0
 pytz==2024.1
 redis==5.0.8
